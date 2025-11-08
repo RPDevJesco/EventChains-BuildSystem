@@ -143,6 +143,35 @@ This separation enables:
 - **Power**: Composable middleware (caching, parallelism, etc.)
 - **Maintainability**: Clean code principles
 
+## Limitations
+
+- **No Dependency Management System** - This is a future implementation but is a complex problem to solve
+
+Manual Works today though
+```c
+mkdir myapp
+cd myapp
+
+# Get dependencies manually
+mkdir third_party
+git clone https://github.com/json-c/json-c third_party/json-c
+git clone https://github.com/sqlite/sqlite third_party/sqlite
+
+# Create your app
+mkdir src
+cat > src/main.c << 'EOF'
+#include "../third_party/json-c/json.h"
+#include "../third_party/sqlite/sqlite3.h"
+
+int main() {
+    // Your code here
+}
+EOF
+
+# Build everything
+ecbuild
+```
+
 ## 🔬 Test Coverage
 
 All test cases passing:
@@ -172,10 +201,8 @@ All test cases passing:
 This is the first step toward an EventChains-based build system that will be:
 
 1. **Faster** than Make
-2. **Simpler** than CMake  
+2. **Simpler** than CMake
 3. **More powerful** than Bazel
 4. **More maintainable** than all of them
 
 By leveraging EventChains' middleware system, we get features like caching, parallelism, and observability **for free** - they're just middleware layers.
-
----
